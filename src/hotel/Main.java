@@ -24,8 +24,8 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
         MySQLDatabaseUtil.dbConnect();
-//        List<Client> nbClients = ClientDAO.listclients();
-   //     System.out.println(nbClients.size());
+        //List<Client> nbClients = ClientDAO.listclients();
+        //System.out.println(nbClients.size());
         //PlanningDAO.listplanning();
         //List<Chambre> nbChambres= ChambreDAO.listchambres();
         /*for (Client client: ClientDAO.listclients()){
