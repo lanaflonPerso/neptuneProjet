@@ -16,18 +16,23 @@ public class ChambreDAO {
             String selectquery = "SELECT numero, etage, exposition, capacite, tarif_id,  douche FROM chambres ;";
             ResultSet resultset=MySQLDatabaseUtil.dbExecuteQuery(selectquery);
             while(resultset.next()){
+
+                Chambre chambre = new Chambre();
+
                 System.out.println("La chambre numero "+resultset.getInt("numero")+ " pour "+resultset.getInt("capacite")+
                         " personnes est exposée côté "+resultset.getString("exposition")+
                         ", possède "+resultset.getInt("douche")+ " douche, est située au "+resultset.getString("etage"));
-                int numeroL = resultset.getInt("numero");
-                int capaciteL= resultset.getInt("capacite");
-                String expositionL = resultset.getString("exposition");
-                int doucheL =  resultset.getInt("douche");
-                int etageL = resultset.getInt("etage");
-                int idTarifL = resultset.getInt("tarif_id");
-                Chambre chambreL = new Chambre(numeroL,capaciteL,expositionL,doucheL,etageL,idTarifL);
 
-               chambres.add(chambreL);
+
+                chambre.setId (resultset.getInt("numero"));
+                chambre.setCapacite(resultset.getInt("capacite"));
+                chambre.setExposition(resultset.getString("exposition"));
+                chambre.setDouche(resultset.getInt("douche"));
+                chambre.setEtage(resultset.getInt("etage"));
+                chambre.setIdTarif(resultset.getInt("tarif_id"));
+
+
+               chambres.add(chambre);
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -17,6 +17,10 @@ public class Chambre {
         this.idTarif = idTarif;
     }
 
+    public Chambre() {
+
+    }
+
     @Override
     public String toString() {
         return "Chambre{" +
