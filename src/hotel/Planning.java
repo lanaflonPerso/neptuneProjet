@@ -9,11 +9,15 @@ public class Planning {
     private int reservation;
     private int idClient;
 
-    public LocalDate getJour() {
-        return jour;
+    public Planning() {
+
     }
 
-    public Planning(int numeroChambre, LocalDate jour, int paye, int idClient) {
+    public LocalDate getJour(LocalDate jour) {
+        return this.jour;
+    }
+
+    public Planning(int numeroChambre, LocalDate jour, int reservation, int paye, int idClient) {
         this.numeroChambre = numeroChambre;
         this.jour = jour;
         this.paye = paye;
@@ -29,6 +33,14 @@ public class Planning {
                 ", paye=" + paye +
                 ", idClient=" + idClient +
                 '}';
+    }
+
+    public int getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(int reservation) {
+        this.reservation = reservation;
     }
 
     public void setJour(LocalDate jour) {

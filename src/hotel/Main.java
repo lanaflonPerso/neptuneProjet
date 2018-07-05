@@ -28,8 +28,10 @@ public class Main extends Application {
    //     System.out.println(nbClients.size());
         //PlanningDAO.listplanning();
         //List<Chambre> nbChambres= ChambreDAO.listchambres();
-        for (Client client: ClientDAO.listclients()){
-        System.out.println(client);}
+        /*for (Client client: ClientDAO.listclients()){
+        System.out.println(client);}*/
+        for (Planning planning: PlanningDAO.listplanning()){
+            System.out.println(planning);}
         //ClientDAO.addClient(client);
         //ClientDAO.removeClient(clientD);
        // ClientDAO.updateClient(clientU);
