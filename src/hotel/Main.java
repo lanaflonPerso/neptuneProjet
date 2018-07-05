@@ -30,8 +30,10 @@ public class Main extends Application {
         //List<Chambre> nbChambres= ChambreDAO.listchambres();
         /*for (Client client: ClientDAO.listclients()){
         System.out.println(client);}*/
-        for (Planning planning: PlanningDAO.listplanning()){
-            System.out.println(planning);}
+        /*for (Planning planning: PlanningDAO.listplanning()){
+            System.out.println(planning);}*/
+        for (Chambre chambre: ChambreDAO.listchambres()){
+            System.out.println(chambre);}
         //ClientDAO.addClient(client);
         //ClientDAO.removeClient(clientD);
        // ClientDAO.updateClient(clientU);
