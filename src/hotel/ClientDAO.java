@@ -54,8 +54,21 @@ public class ClientDAO {
     public static void updateClient(Client clientU) throws SQLException, ClassNotFoundException {
         String updateQueryClient = "update clients set civilite = '"+clientU.getCivilite()+"', nom= '"+clientU.getNom()+"', prenom = '"+clientU.getPrenom()+"', adresse='"+clientU.getAdresse()+"', codePostal='"+clientU.getCodePostal()+"', ville='"+clientU.getVille()+"', pays_id="+clientU.getId_pays()+" where id="+clientU.getId_client()+";";
 
-
         MySQLDatabaseUtil.dbExecuteUpdate(updateQueryClient);
+    }
+    public static void searchClient(String searchNom) throws SQLException {
+        ResultSet searchResult= null;
+        try {
+           searchResult= MySQLDatabaseUtil.dbExecuteQuery("Select * from clients where nom like '%"+searchNom+"%'");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        while (searchResult.next()) {
+            System.out.println(searchResult.getString("nom"));
+        }
     }
 
 }

@@ -33,11 +33,11 @@ public class Main extends Application {
         //List<Client> nbClients = ClientDAO.listclients();
          //System.out.println(nbClients.size());
         //ChambreDAO.singleChambre(9);
-        PlanningDAO.removeReservation(planning,client);
+        //PlanningDAO.removeReservation(planning,client);
         //PlanningDAO.addReservation(planning, client, chambre);
         //lanningDAO.updateReservation(planning, client, chambre);
         //List<Chambre> nbChambres= ChambreDAO.listchambres();
-        ChambreDAO.singleChambre(9);
+        //ChambreDAO.singleChambre(9);
 
         //Affichage liste clients
         /*for (Client client: ClientDAO.listclients()){
@@ -52,8 +52,10 @@ public class Main extends Application {
         /*for (Chambre chambre: ChambreDAO.listchambres()){
             System.out.println(chambre);}*/
 
+         ClientDAO.searchClient("coussot");
 
-        //ClientDAO.addClient(client);
+
+         //ClientDAO.addClient(client);
         //ClientDAO.removeClient(clientD);
        // ClientDAO.updateClient(clientU);
     }

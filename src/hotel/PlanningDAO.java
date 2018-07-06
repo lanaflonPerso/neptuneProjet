@@ -85,7 +85,7 @@ public class PlanningDAO {
         MySQLDatabaseUtil.dbExecuteUpdate(AddQueryReservation);
     }
     public static void removeReservation(Planning reservation, Client client) throws SQLException, ClassNotFoundException {
-        MySQLDatabaseUtil.dbExecuteUpdate("delete from planning where (jour='"+reservation.getJour()+"') and client_id="+client.getId_client());
+        MySQLDatabaseUtil.dbExecuteUpdate("delete from planning where (jour='"+reservation.getJour()+"') and client_id="+client.getId_client()+");");
 
     }
     public static void updateReservation(Planning reservation, Client client, Chambre chambre) throws SQLException, ClassNotFoundException {
