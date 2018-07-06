@@ -22,7 +22,7 @@ public class PlanningDAO {
 
                 Planning planning = new Planning();
                 planning.setNumeroChambre(resultset.getInt("chambre_numero"));
-                planning.getJour(resultset.getDate("jour").toLocalDate());
+                planning.setJour(resultset.getDate("jour").toLocalDate());
                 planning.setReservation(resultset.getInt("reservation"));
                 planning.setPaye(resultset.getInt("paye"));
                 planning.setIdClient(resultset.getInt("client_id"));
@@ -80,4 +80,17 @@ public class PlanningDAO {
         return planningsS;
 
     }
+    public static void addReservation(Planning reservation, Client client, Chambre chambre) throws SQLException, ClassNotFoundException {
+        String AddQueryReservation = "insert into planning (chambre_numero, jour, reservation, paye, client_id) values ('"+chambre.getId()+"','"+reservation.getJour()+"','"+reservation.getReservation()+"',  "+reservation.getPaye()+","+client.getId_client()+");";
+        MySQLDatabaseUtil.dbExecuteUpdate(AddQueryReservation);
+    }
+    public static void removeReservation(Planning reservation, Client client) throws SQLException, ClassNotFoundException {
+        MySQLDatabaseUtil.dbExecuteUpdate("delete from planning where (jour='"+reservation.getJour()+"') and client_id="+client.getId_client());
+
+    }
+    public static void updateReservation(Planning reservation, Client client, Chambre chambre) throws SQLException, ClassNotFoundException {
+        String updateQueryReservation = "update planning set chambre_numero = '"+chambre.getId()+"', jour= '"+reservation.getJour()+"', reservation = "+reservation.getReservation()+", paye = "+reservation.getPaye()+", client_id="+client.getId_client()+" where client_id="+client.getId_client()+";";
+        MySQLDatabaseUtil.dbExecuteUpdate(updateQueryReservation);
+    }
+
 }

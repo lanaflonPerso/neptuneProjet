@@ -13,9 +13,7 @@ public class Planning {
 
     }
 
-    public LocalDate getJour(LocalDate jour) {
-        return this.jour;
-    }
+
 
     public Planning(int numeroChambre, LocalDate jour, int reservation, int paye, int idClient) {
         this.numeroChambre = numeroChambre;
@@ -33,6 +31,10 @@ public class Planning {
                 ", paye=" + paye +
                 ", idClient=" + idClient +
                 '}';
+    }
+
+    public LocalDate getJour() {
+        return this.jour;
     }
 
     public int getReservation() {
@@ -55,7 +57,7 @@ public class Planning {
         this.numeroChambre = numeroChambre;
     }
 
-    public int isPaye() {
+    public int getPaye() {
         return paye;
     }
 

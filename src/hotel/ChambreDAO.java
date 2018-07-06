@@ -42,6 +42,10 @@ public class ChambreDAO {
 
         return chambres;
 
+    }
+    public static void singleChambre (int id ) throws SQLException, ClassNotFoundException {
+        String ChambreSingleQuery = "select * from chambres where numero=" + id + ";";
+        MySQLDatabaseUtil.dbExecuteQuery(ChambreSingleQuery);
 
 
     }
