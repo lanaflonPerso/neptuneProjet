@@ -27,7 +27,7 @@ public class Client {
 
     @Override
     public String toString() {
-        return "Client{" +
+        return  "Client{" +
                 "civilite='" + civilite + '\'' +
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +

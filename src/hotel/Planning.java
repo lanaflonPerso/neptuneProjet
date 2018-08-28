@@ -25,7 +25,7 @@ public class Planning {
 
     @Override
     public String toString() {
-        return "Planning{" +
+        return  "Planning{" +
                 "numeroChambre=" + numeroChambre +
                 ", jour=" + jour +
                 ", paye=" + paye +

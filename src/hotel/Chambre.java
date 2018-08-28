@@ -7,14 +7,16 @@ public class Chambre {
     private int douche;
     private int etage;
     private int idTarif;
+    private double prix;
 
-    public Chambre(int id, int capacite, String exposition, int douche, int etage, int idTarif) {
+    public Chambre(int id, int capacite, String exposition, int douche, int etage, int idTarif, double prix) {
         this.id = id;
         this.capacite = capacite;
         this.exposition = exposition;
         this.douche = douche;
         this.etage = etage;
         this.idTarif = idTarif;
+        this.prix = prix;
     }
 
     public Chambre() {
@@ -23,13 +25,14 @@ public class Chambre {
 
     @Override
     public String toString() {
-        return "Chambre{" +
+        return  "Chambre{" +
                 "id=" + id +
                 ", capacite=" + capacite +
                 ", exposition='" + exposition + '\'' +
                 ", douche=" + douche +
                 ", etage=" + etage +
                 ", idTarif=" + idTarif +
+                ", prix="+ prix +
                 '}';
     }
 
@@ -80,4 +83,13 @@ public class Chambre {
     public void setIdTarif(int idTarif) {
         this.idTarif = idTarif;
     }
+
+    public double getPrix() {
+        return prix;
+    }
+
+    public void setPrix(double prix) {
+        this.prix = prix;
+    }
+
 }
