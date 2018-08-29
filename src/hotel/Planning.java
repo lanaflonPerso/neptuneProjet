@@ -5,9 +5,10 @@ import java.time.LocalDate;
 public class Planning {
     private int numeroChambre;
     private LocalDate jour;
-    private int paye;
-    private int reservation;
-    private int idClient;
+    private String paye;
+    private String reservation;
+    private String nomC;
+    private String prenomC;
 
     public Planning() {
 
@@ -15,33 +16,29 @@ public class Planning {
 
 
 
-    public Planning(int numeroChambre, LocalDate jour, int reservation, int paye, int idClient) {
+    public Planning(int numeroChambre, LocalDate jour, String reservation, String paye, String nomC, String prenomC) {
         this.numeroChambre = numeroChambre;
         this.jour = jour;
         this.paye = paye;
         this.reservation = reservation;
-        this.idClient = idClient;
+        this.nomC = nomC;
+        this.prenomC = prenomC;
     }
 
     @Override
     public String toString() {
-        return  "Planning{" +
-                "numeroChambre=" + numeroChambre +
-                ", jour=" + jour +
-                ", paye=" + paye +
-                ", idClient=" + idClient +
-                '}';
+        return  reservation;
     }
 
     public LocalDate getJour() {
         return this.jour;
     }
 
-    public int getReservation() {
+    public String getReservation() {
         return reservation;
     }
 
-    public void setReservation(int reservation) {
+    public void setReservation(String reservation) {
         this.reservation = reservation;
     }
 
@@ -57,19 +54,27 @@ public class Planning {
         this.numeroChambre = numeroChambre;
     }
 
-    public int getPaye() {
+    public String getPaye() {
         return paye;
     }
 
-    public void setPaye(int paye) {
+    public void setPaye(String paye) {
         this.paye = paye;
     }
 
-    public int getIdClient() {
-        return idClient;
+    public String getNomC() {
+        return nomC;
     }
 
-    public void setIdClient(int idClient) {
-        this.idClient = idClient;
+    public void setNomC(String nomC) {
+        this.nomC = nomC;
+    }
+
+    public String getPrenomC() {
+        return prenomC;
+    }
+
+    public void setPrenomC(String prenomC) {
+        this.prenomC = prenomC;
     }
 }

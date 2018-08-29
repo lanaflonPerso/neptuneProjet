@@ -12,7 +12,7 @@ public class ClientDAO {
         List<Client> clients = new ArrayList<Client>();
         try {
             //ResultSet resultset = MySQLDatabaseUtil.dbExecuteQuery("SELECT * FROM `clients` WHERE 1");
-            ResultSet resultset = MySQLDatabaseUtil.dbExecuteQuery("SELECT * FROM clients ;");
+            ResultSet resultset = MySQLDatabaseUtil.dbExecuteQuery("SELECT * FROM clients order by nom;");
             while (resultset.next()) {
                 System.out.println(resultset.getString("civilite")+" "+resultset.getString("nom")+" "+
                         resultset.getString("prenom")+" "+ " résidant au "+
@@ -56,20 +56,33 @@ public class ClientDAO {
 
         MySQLDatabaseUtil.dbExecuteUpdate(updateQueryClient);
     }
-    public static void searchClient(String searchNom) throws SQLException {
+    public  static List<Client> searchClient(String searchNom) throws SQLException {
         ResultSet searchResult= null;
+        List<Client> clientsSearch = new ArrayList<Client>();
         try {
            searchResult= MySQLDatabaseUtil.dbExecuteQuery("Select * from clients where nom like '%"+searchNom+"%'");
+           while (searchResult.next()) {
+               int idl=searchResult.getInt("id");
+               String civilitel= searchResult.getString("civilite");
+               String nomL = searchResult.getString("nom");
+               String prenomL = searchResult.getString("prenom");
+               String adresseL = searchResult.getString("adresse");
+               String cpL = searchResult.getString("codePostal");
+               String villeL = searchResult.getString("ville");
+               int idPaysL = searchResult.getInt("pays_id");
+               Client clientL= new Client(idl,civilitel,nomL,prenomL,adresseL,cpL,villeL,idPaysL);
+              clientsSearch.add(clientL);
+           }
 
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        while (searchResult.next()) {
-            System.out.println(searchResult.getString("nom"));
-        }
+
+       return clientsSearch;
     }
+
 
 
 }

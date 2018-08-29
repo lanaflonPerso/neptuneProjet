@@ -13,7 +13,7 @@ public class ChambreDAO {
     public static List<Chambre> listchambres (){
         List<Chambre> chambres= new ArrayList<Chambre>();
         try {
-            String selectquery = "SELECT numero,capacite,exposition,douche,etage, tarifs.prix FROM `chambres` JOIN tarifs on chambres.tarif_id = tarifs.id" ;
+            String selectquery = "SELECT numero,capacite,exposition,douche,etage, tarifs.prix FROM `chambres` JOIN tarifs on chambres.tarif_id = tarifs.id order by numero" ;
             ResultSet resultset=MySQLDatabaseUtil.dbExecuteQuery(selectquery);
             while(resultset.next()){
 

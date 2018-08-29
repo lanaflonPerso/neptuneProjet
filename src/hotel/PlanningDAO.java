@@ -16,16 +16,29 @@ public class PlanningDAO {
     public static List<Planning> listplanning() {
         List<Planning> plannings = new ArrayList<Planning>();
         try {
-            ResultSet resultset = MySQLDatabaseUtil.dbExecuteQuery("SELECT * FROM planning;");
+            ResultSet resultset = MySQLDatabaseUtil.dbExecuteQuery("SELECT chambre_numero, reservation ,paye, jour, clients.nom, clients.prenom FROM planning join clients  on clients.id = planning.client_id");
             while (resultset.next()) {
                 System.out.println(resultset.getDate("jour"));
 
                 Planning planning = new Planning();
                 planning.setNumeroChambre(resultset.getInt("chambre_numero"));
                 planning.setJour(resultset.getDate("jour").toLocalDate());
-                planning.setReservation(resultset.getInt("reservation"));
-                planning.setPaye(resultset.getInt("paye"));
-                planning.setIdClient(resultset.getInt("client_id"));
+                if (resultset.getInt("reservation")== -1){
+                    planning.setReservation("Non");
+                }
+                else if (resultset.getInt("reservation")== 0){
+                    planning.setReservation("Oui");
+                }
+                //planning.setReservation(resultset.getInt("reservation"));
+                if (resultset.getInt("paye")==-1){
+                    planning.setPaye("Non");
+                }
+                else if (resultset.getInt("paye")== 0){
+                    planning.setPaye("Oui");
+                }
+                //planning.setPaye(""+resultset.getInt("paye"));
+                planning.setNomC(resultset.getString("nom"));
+                planning.setPrenomC(resultset.getString("prenom"));
 
 
                 plannings.add(planning);
@@ -57,15 +70,29 @@ public class PlanningDAO {
 
             }
             LocalDate dateFin = dateDebutSemaine.plusDays(6);
-                ResultSet resultSemaine = MySQLDatabaseUtil.dbExecuteQuery("SELECT * FROM planning Where jour BETWEEN '" + dateDebutSemaine+ "' and '"+dateFin+"' ");
+                ResultSet resultSemaine = MySQLDatabaseUtil.dbExecuteQuery("SELECT chambre_numero, reservation ,paye, jour, clients.nom, clients.prenom FROM planning join clients \n" +
+                        "on clients.id = planning.client_id  Where jour BETWEEN '" + dateDebutSemaine+ "' and '"+dateFin+"' ");
                 while (resultSemaine.next()) {
 
                     Planning planningSemaine = new Planning();
                     planningSemaine.setNumeroChambre(resultSemaine.getInt("chambre_numero"));
                     planningSemaine.setJour(resultSemaine.getDate("jour").toLocalDate());
-                    planningSemaine.setReservation(resultSemaine.getInt("reservation"));
-                    planningSemaine.setPaye(resultSemaine.getInt("paye"));
-                    planningSemaine.setIdClient(resultSemaine.getInt("client_id"));
+                    if (resultSemaine.getInt("reservation")==-1){
+                        planningSemaine.setReservation("Non");
+                    }
+                    else if (resultSemaine.getInt("reservation")== 0){
+                        planningSemaine.setReservation("Oui");
+                    }
+                    //planningSemaine.setReservation(resultSemaine.getInt("reservation"));
+                    if (resultSemaine.getInt("paye")==-1){
+                        planningSemaine.setPaye("Non");
+                    }
+                    else if (resultSemaine.getInt("paye")== 0){
+                        planningSemaine.setPaye("Oui");
+                    }
+                    //planningSemaine.setPaye(resultSemaine.getInt("paye"));
+                    planningSemaine.setNomC(resultSemaine.getString("nom"));
+                    planningSemaine.setPrenomC(resultSemaine.getString("prenom"));
 
                     planningsS.add(planningSemaine);
                 }
@@ -92,5 +119,7 @@ public class PlanningDAO {
         String updateQueryReservation = "update planning set chambre_numero = '"+chambre.getId()+"', jour= '"+reservation.getJour()+"', reservation = "+reservation.getReservation()+", paye = "+reservation.getPaye()+", client_id="+client.getId_client()+" where client_id="+client.getId_client()+";";
         MySQLDatabaseUtil.dbExecuteUpdate(updateQueryReservation);
     }
+
+
 
 }

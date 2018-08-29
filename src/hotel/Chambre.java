@@ -25,15 +25,7 @@ public class Chambre {
 
     @Override
     public String toString() {
-        return  "Chambre{" +
-                "id=" + id +
-                ", capacite=" + capacite +
-                ", exposition='" + exposition + '\'' +
-                ", douche=" + douche +
-                ", etage=" + etage +
-                ", idTarif=" + idTarif +
-                ", prix="+ prix +
-                '}';
+        return  "Chambre N°"+id;
     }
 
     public int getId() {

@@ -8,9 +8,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.List;
 
-public class TableauChambres extends TableView<Chambre> {
+public class TableauChambresView extends TableView<Chambre> {
 
-    public TableauChambres() {
+    public TableauChambresView() {
 
 
         TableColumn<Chambre, String> numeroCol = new TableColumn<Chambre, String>("Numéro");

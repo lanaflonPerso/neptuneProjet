@@ -27,15 +27,8 @@ public class Client {
 
     @Override
     public String toString() {
-        return  "Client{" +
-                "civilite='" + civilite + '\'' +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", adresse='" + adresse + '\'' +
-                ", codePostal='" + codePostal + '\'' +
-                ", ville='" + ville + '\'' +
-                ", id_pays=" + id_pays +
-                '}';
+        return   civilite  +" "+ nom+ " "+prenom;
+
     }
 
     public String getCivilite() {

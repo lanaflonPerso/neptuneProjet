@@ -3,19 +3,18 @@ package hotel;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import javax.xml.soap.Text;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -30,173 +29,130 @@ public class Main extends Application {
                                 "000010", "Salopette", 3);
     Client clientD = new Client(161,"Monsieur","titi","tata","1 rue des oisillions","34000","Montpellier", 2);*/
     //LocalDate datetest= LocalDate.parse("2016-12-31");
-    Planning planning = new Planning(9, LocalDate.parse("2016-12-31"),-1,-1,161);
+   // Planning planning = new Planning(9, LocalDate.parse("2016-12-31"),-1,-1,161);
 
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+
+        //Fenêtre principale
+
         BorderPane contenuFenetre = new BorderPane();
+        HBox footerReservation = new HBox();
+        footerReservation.setPadding(new Insets(15,20,20,20));
         primaryStage.setTitle("Hôtel Neptune");
 
-        //Vue menu
+        //Vue top window ( accueil+ menu)
+
+        VBox topWindow = new VBox();
         HBox boutonsMenu = new HBox();
+        HBox msgAccueil = new HBox();
+        Label msg = new Label("Bienvenue sur cette interface de gestion de l'hôtel Netpune");
+
+
+        //Menu
         Button btnListeClients = new Button("Liste des clients");
-        Button  btnListeChambres = new Button("Chambres Libres");
-        TextField champTexte = new TextField("Entrez le nom du client");
-        Button search = new Button("Rechercher");
+        Button  btnListeChambres = new Button("Liste des Chambres");
+        Button btnAddReservation = new Button("Ajouter une réservation");
+        TextField champTexte = new TextField();
+        champTexte.setPromptText("Rechercher un client par nom");
+        Button btnsearch = new Button("Rechercher");
+        Button btnreservation = new Button("Reservations");
+        msgAccueil.getChildren().add(msg);
         boutonsMenu.getChildren().add(btnListeClients);
         boutonsMenu.getChildren().add(btnListeChambres);
         boutonsMenu.getChildren().add(champTexte);
-        boutonsMenu.getChildren().add(search);
+        boutonsMenu.getChildren().add(btnsearch);
+        boutonsMenu.getChildren().add(btnreservation);
+        boutonsMenu.getChildren().add(btnAddReservation);
         boutonsMenu.setSpacing(10);
         boutonsMenu.setPadding(new Insets(15,20, 10,10));
+        topWindow.getChildren().add(msgAccueil);
+        topWindow.getChildren().add(boutonsMenu);
 
-        //Pane central Accueil
-        HBox accueil= new HBox();
-        Label msg = new Label("Bienvenue sur cette interface de gestion de l'hôtel Netpune");
-        accueil.getChildren().add(msg);
+        //Footer Reservations
+        Button btnPlanningSemaine = new Button("Réservation de la semaine");
+        btnPlanningSemaine.setPadding(new Insets(5, 5, 5, 5));
+        footerReservation.getChildren().add(btnPlanningSemaine);
 
-        //Table liste clients
-        TableView<Client> table = new TableView<Client>();
+        //TableView Table liste clients
 
-        TableColumn<Client, String> civiliteCol = new TableColumn<Client, String>("Civilité");
-        table.getColumns().add(civiliteCol);
-        civiliteCol.setCellValueFactory(new PropertyValueFactory<>("civilite"));
+        TableauClientView tableClient = new TableauClientView();
 
-        TableColumn<Client, String> nomCol = new TableColumn<Client, String>("Nom");
-        table.getColumns().add(nomCol);
-        nomCol.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        //TableView Liste des chambres
 
-        TableColumn<Client, String> prenomCol = new TableColumn<Client, String>("Prenom");
-        table.getColumns().add(prenomCol);
-        prenomCol.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+        TableauChambresView tableChambres= new TableauChambresView();
 
-        TableColumn<Client, String> adresseCol = new TableColumn<Client, String>("Adresse");
-        table.getColumns().add(adresseCol);
-        adresseCol.setCellValueFactory(new PropertyValueFactory<>("adresse"));
+        //TableView Liste Reservation
 
-        TableColumn<Client, String> cpCol = new TableColumn<Client, String>("Code postal");
-        table.getColumns().add(cpCol);
-        cpCol.setCellValueFactory(new PropertyValueFactory<>("codePostal"));
+        TableauReservationsView tableReservation= new TableauReservationsView();
 
-        // Display row data
-        List<Client> clients = ClientDAO.listclients();
-        ObservableList<Client> list = FXCollections.observableArrayList(clients);
-        table.setItems(list);
+        //Fenêtre d'ajout de réservation
 
-
-
-        //Vue Liste des chambres
-
-//        TableView<Chambre> tableChambres = new TableView<>();
-//
-//        TableColumn<Chambre, String> numeroCol = new TableColumn<Chambre, String>("Numéro");
-//        tableChambres.getColumns().add(numeroCol);
-//        numeroCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-//
-//        TableColumn<Chambre, String> capaciteCol = new TableColumn<Chambre, String>("Capacité (nb personnes)");
-//        tableChambres.getColumns().add(capaciteCol);
-//        capaciteCol.setCellValueFactory(new PropertyValueFactory<>("capacite"));
-//
-//        TableColumn<Chambre, String> expositionCol = new TableColumn<Chambre, String>("Exposition");
-//        tableChambres.getColumns().add(expositionCol);
-//        expositionCol.setCellValueFactory(new PropertyValueFactory<>("exposition"));
-//
-//        TableColumn<Chambre, String> doucheCol = new TableColumn<Chambre, String>("Douche");
-//        tableChambres.getColumns().add(doucheCol);
-//        doucheCol.setCellValueFactory(new PropertyValueFactory<>("douche"));
-//
-//        TableColumn<Chambre, String> etageCol = new TableColumn<Chambre, String>("Etage");
-//        tableChambres.getColumns().add(etageCol);
-//        etageCol.setCellValueFactory(new PropertyValueFactory<>("etage"));
-//
-//        TableColumn<Chambre, String> prixCol = new TableColumn<Chambre, String>("Prix");
-//        tableChambres.getColumns().add(prixCol);
-//        prixCol.setCellValueFactory(new PropertyValueFactory<>("prix"));
-       TableauChambres tableChambres= new TableauChambres();
-        // Display row data
-//        List<Chambre> chambres = ChambreDAO.listchambres();
-//        ObservableList<Chambre> listChambre  = FXCollections.observableArrayList(chambres);
-//        tableChambres.setItems(listChambre);
-
+        FenetreAddReservation fenetreAjoutReserv = new FenetreAddReservation();
 
         //Hbox Clients
         HBox tableauClients = new HBox();
-        Scene sceneClient= new Scene(tableauClients,500,600);
+        Scene sceneClient= new Scene(tableauClients,800,600);
         primaryStage.setScene(sceneClient);
-        tableauClients.getChildren().add(table);
+        tableauClients.getChildren().add(tableClient);
 
         //Hbox Chambres
         HBox tableauChambres = new HBox();
-        Scene sceneChambre = new Scene(tableauChambres,500,600);
+        Scene sceneChambre = new Scene(tableauChambres,800,600);
         primaryStage.setScene(sceneChambre);
         tableauChambres.getChildren().add(tableChambres);
         System.out.println(tableauChambres);
 
         //Contenu fenêtre
-        contenuFenetre.setTop(boutonsMenu);
-        contenuFenetre.setCenter(accueil);
-        primaryStage.setScene(new Scene(contenuFenetre, 640, 480));
+        contenuFenetre.setTop(topWindow);
+        contenuFenetre.setCenter(tableClient);
+        primaryStage.setScene(new Scene(contenuFenetre, 800, 600));
         primaryStage.show();
+
+        //Click Buttons
         btnListeClients.setOnAction(event -> {
-           contenuFenetre.setCenter(tableauClients);
+            List<Client> clients = ClientDAO.listclients();
+            ObservableList<Client> list = FXCollections.observableArrayList(clients);
+            tableClient.setItems(list);
+            contenuFenetre.setCenter(tableClient);
                 });
         btnListeChambres.setOnAction(event -> {
-           contenuFenetre.setCenter(tableauChambres);
+           contenuFenetre.setCenter(tableChambres);
                 });
+        btnsearch.setOnAction(event -> {
+            try {
+                List<Client> searchResult = ClientDAO.searchClient( champTexte.getText());
+                ObservableList<Client> searchList = FXCollections.observableArrayList(searchResult);
+                tableClient.setItems(searchList);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+        btnreservation.setOnAction(event -> {
+            List<Planning> plannings = PlanningDAO.listplanning();
+            ObservableList<Planning> planning = FXCollections.observableArrayList(plannings);
+            tableReservation.setItems(planning);
+            contenuFenetre.setCenter(tableReservation);
+            contenuFenetre.setBottom(footerReservation);
+            footerReservation.setAlignment(Pos.BOTTOM_CENTER);
+
+        });
+        btnPlanningSemaine.setOnAction(event -> {
+            List<Planning>planningsS =PlanningDAO.planningDeLaSemaine();
+            ObservableList<Planning> planning = FXCollections.observableArrayList(planningsS);
+            tableReservation.setItems(planning);
+        });
+        btnAddReservation.setOnAction(event -> {
+            fenetreAjoutReserv.show();
+        });
+
+
+
+
+
         MySQLDatabaseUtil.dbConnect();
-
-
-
-
-        //List<Client> nbClients = ClientDAO.listclients();
-         //System.out.println(nbClients.size());
-        //ChambreDAO.singleChambre(9);
-        //PlanningDAO.removeReservation(planning,client);
-        //PlanningDAO.addReservation(planning, client, chambre);
-        //lanningDAO.updateReservation(planning, client, chambre);
-        //List<Chambre> nbChambres= ChambreDAO.listchambres();
-        //ChambreDAO.singleChambre(9);
-
-        //Affichage liste clients
-        /*for (Client client: ClientDAO.listclients()){
-        System.out.println(client);}*/
-
-       //Vue liste clients
-//        Stage secondaryStage = new Stage();
-//        TableView<Client> table = new TableView<Client>();
-//
-//        TableColumn<Client, String> civiliteCol = new TableColumn<Client, String>("Civilité");
-//        table.getColumns().add(civiliteCol);
-//        civiliteCol.setCellValueFactory(new PropertyValueFactory<>("civilite"));
-//
-//        TableColumn<Client, String> nomCol = new TableColumn<Client, String>("Nom");
-//        table.getColumns().add(nomCol);
-//        nomCol.setCellValueFactory(new PropertyValueFactory<>("nom"));
-//
-//        TableColumn<Client, String> prenomCol = new TableColumn<Client, String>("Prenom");
-//        table.getColumns().add(prenomCol);
-//        prenomCol.setCellValueFactory(new PropertyValueFactory<>("prenom"));
-//
-//        TableColumn<Client, String> adresseCol = new TableColumn<Client, String>("Adresse");
-//        table.getColumns().add(adresseCol);
-//        adresseCol.setCellValueFactory(new PropertyValueFactory<>("adresse"));
-//
-//        TableColumn<Client, String> cpCol = new TableColumn<Client, String>("Code postal");
-//        table.getColumns().add(cpCol);
-//        cpCol.setCellValueFactory(new PropertyValueFactory<>("codePostal"));
-//
-//    // Display row data
-//        List<Client> clients = ClientDAO.listclients();
-//        ObservableList<Client> list = FXCollections.observableArrayList(clients);
-//        table.setItems(list);
-//
-//        BorderPane tableauClients = new BorderPane();
-//        //hBox.setPadding(new Insets(1,2));
-//        secondaryStage.setScene(new Scene(tableauClients, 500,600));
-//        tableauClients.setCenter(table);
-//        secondaryStage.show();
 
 
 
