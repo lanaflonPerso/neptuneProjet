@@ -17,7 +17,7 @@ import java.util.List;
 
 public class Main extends Application {
    // Chambre chambre = new Chambre(1,2,"port",0,1,2);
-    Client client = new Client("Monsieur", "toto", "tata", "1 rue des oisillions", "34000", "Montpellier");
+    //Client client = new Client("Monsieur", "toto", "tata", "1 rue des oisillions", "34000", "Montpellier");
     /*Client clientU = new Client(163,
                                 "madame",
                                 "tata",
@@ -104,7 +104,7 @@ public class Main extends Application {
         FenetreAddReservation fenetreAjoutReserv = new FenetreAddReservation();
 
         //Fenêtre d'ajout de client
-        FenetreAddClient fenetreAjoutClient = new FenetreAddClient();
+        //FenetreAddClient fenetreAjoutClient = new FenetreAddClient();
 
         //Hbox Clients
         HBox tableauClients = new HBox();
@@ -191,9 +191,9 @@ public class Main extends Application {
 
             fenatreMajReserv.show();
         });
-        btnAjoutClient.setOnAction(event -> {
-            fenetreAjoutClient.show();
-        });
+//        btnAjoutClient.setOnAction(event -> {
+//            fenetreAjoutClient.show();
+//        });
         btnSupprClient.setOnAction(event -> {
             Client clientSuppr = tableClient.getSelectionModel().getSelectedItem();
             if (clientSuppr != null){

@@ -29,7 +29,7 @@ public class ClientDAO {
                    int idPaysL = resultset.getInt("pays_id");
 
 
-                   Client clientL= new Client(civilitel,nomL,prenomL,adresseL,cpL,villeL);
+                   Client clientL= new Client(idl,civilitel,nomL,prenomL,adresseL,cpL,villeL);
 
                 clients.add(clientL);
             }
@@ -69,7 +69,7 @@ public class ClientDAO {
                String cpL = searchResult.getString("codePostal");
                String villeL = searchResult.getString("ville");
                int idPaysL = searchResult.getInt("pays_id");
-               Client clientL= new Client(civilitel,nomL,prenomL,adresseL,cpL,villeL);
+               Client clientL= new Client(idl,civilitel,nomL,prenomL,adresseL,cpL,villeL);
               clientsSearch.add(clientL);
            }
 
