@@ -14,7 +14,7 @@ public class Client {
 
 
 
-    public Client(int id_client, String civilite, String nom, String prenom, String adresse, String codePostal, String ville, int id_pays) {
+    public Client(String civilite, String nom, String prenom, String adresse, String codePostal, String ville) {
         this.civilite = civilite;
         this.nom = nom;
         this.id_client = id_client;
@@ -24,6 +24,8 @@ public class Client {
         this.ville = ville;
         this.id_pays = id_pays;
     }
+
+
 
     @Override
     public String toString() {

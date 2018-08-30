@@ -16,7 +16,7 @@ public class PlanningDAO {
     public static List<Planning> listplanning() {
         List<Planning> plannings = new ArrayList<Planning>();
         try {
-            ResultSet resultset = MySQLDatabaseUtil.dbExecuteQuery("SELECT chambre_numero, reservation ,paye, jour, clients.nom, clients.prenom FROM planning join clients  on clients.id = planning.client_id");
+            ResultSet resultset = MySQLDatabaseUtil.dbExecuteQuery("SELECT client_id, chambre_numero, reservation ,paye, jour, clients.nom, clients.prenom FROM planning join clients  on clients.id = planning.client_id ORDER BY clients.nom");
             while (resultset.next()) {
                 System.out.println(resultset.getDate("jour"));
 
@@ -108,15 +108,16 @@ public class PlanningDAO {
 
     }
     public static void addReservation(Planning reservation, Client client, Chambre chambre) throws SQLException, ClassNotFoundException {
-        String AddQueryReservation = "insert into planning (chambre_numero, jour, reservation, paye, client_id) values ('"+chambre.getId()+"','"+reservation.getJour()+"','"+reservation.getReservation()+"',  "+reservation.getPaye()+","+client.getId_client()+");";
+        String AddQueryReservation = "insert into planning (chambre_numero, jour, reservation, paye, client_id) values ('"+chambre.getId()+"','"+reservation.getJour()+"','"+reservation.reserveInt("")+"',  "+reservation.payeInt("")+","+client.getId_client()+");";
         MySQLDatabaseUtil.dbExecuteUpdate(AddQueryReservation);
     }
-    public static void removeReservation(Planning reservation, Client client) throws SQLException, ClassNotFoundException {
-        MySQLDatabaseUtil.dbExecuteUpdate("delete from planning where (jour='"+reservation.getJour()+"') and client_id="+client.getId_client()+");");
+    public static void removeReservation(Planning reservation) throws SQLException, ClassNotFoundException {
+        MySQLDatabaseUtil.dbExecuteUpdate("delete from planning where (jour='"+reservation.getJour()+"')");
 
     }
-    public static void updateReservation(Planning reservation, Client client, Chambre chambre) throws SQLException, ClassNotFoundException {
-        String updateQueryReservation = "update planning set chambre_numero = '"+chambre.getId()+"', jour= '"+reservation.getJour()+"', reservation = "+reservation.getReservation()+", paye = "+reservation.getPaye()+", client_id="+client.getId_client()+" where client_id="+client.getId_client()+";";
+    public static void updateReservation(Planning reservation, Planning reservationOld, Client client, Chambre chambre) throws SQLException, ClassNotFoundException {
+        String updateQueryReservation = "update planning set chambre_numero = '"+chambre.getId()+"', jour = '"+reservation.getJour()+"', reservation = "+reservation.reserveInt("")+", paye = "+reservation.payeInt("")+", client_id="+client.getId_client()+" where client_id="+client.getId_client()+" and jour='"+reservationOld.getJour()+"';";
+        System.out.println(updateQueryReservation);
         MySQLDatabaseUtil.dbExecuteUpdate(updateQueryReservation);
     }
 

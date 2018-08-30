@@ -77,4 +77,26 @@ public class Planning {
     public void setPrenomC(String prenomC) {
         this.prenomC = prenomC;
     }
+
+    public int payeInt (String paye){
+        if (this.equals("Oui")){
+            return 0;
+        }
+        else  if (this.equals("Non")){
+            return -1;
+        }
+        return 0;
+    }
+    public int reserveInt (String reservation){
+        if (this.equals("Oui")){
+            return 0;
+        }
+        else if (this.equals("Non")){
+            return -1;
+        }
+        return 0;
+    }
+//    public int getClientId(){
+//        return
+//    }
 }

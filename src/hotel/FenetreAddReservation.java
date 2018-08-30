@@ -11,13 +11,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-import java.awt.*;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
 public class FenetreAddReservation extends Stage {
-    FenetreAddReservation(){
+
+    public FenetreAddReservation(){
 
         //Pane de l'ajout de réservation
         GridPane contenuAjoutReserv = new GridPane();
@@ -32,7 +32,7 @@ public class FenetreAddReservation extends Stage {
         Label nomClient = new Label("Nom du client: ");
         List<Client> listeDeroulanteClients = ClientDAO.listclients();
         ObservableList<Client> list = FXCollections.observableArrayList(listeDeroulanteClients);
-        ChoiceBox champClient = new ChoiceBox<Client>(list);
+        ChoiceBox<Client> champClient = new ChoiceBox<Client>(list);
 
         Label dateLabel = new Label("Date: ");
         DatePicker dateReserv = new DatePicker();
@@ -40,17 +40,17 @@ public class FenetreAddReservation extends Stage {
         Label numeroChambre = new Label("Chambre: ");
         List<Chambre> listeDeroulanteChambre = ChambreDAO.listchambres();
         ObservableList<Chambre> listChambre = FXCollections.observableArrayList(listeDeroulanteChambre);
-        ChoiceBox champChambre = new ChoiceBox<Chambre>(listChambre);
+        ChoiceBox<Chambre> champChambre = new ChoiceBox<Chambre>(listChambre);
 
         Label reserveLabel = new Label("Réservé: ");
         List<String> reserve = Arrays.asList("Oui","Non");
         ObservableList<String> reserveOuiNon = FXCollections.observableArrayList(reserve);
-        ChoiceBox reserveChoice = new ChoiceBox(reserveOuiNon);
+        ChoiceBox<String> reserveChoice = new ChoiceBox(reserveOuiNon);
 
         Label payeLabel = new Label("Payé: ");
         List<String> paye = Arrays.asList("Oui","Non");
         ObservableList<String> payeOuiNon = FXCollections.observableArrayList(paye);
-        ChoiceBox payeChoice = new ChoiceBox(payeOuiNon);
+        ChoiceBox<String> payeChoice = new ChoiceBox(payeOuiNon);
 
 
         contenuAjoutReserv.add(nomClient,0,0,1,1);
@@ -73,14 +73,21 @@ public class FenetreAddReservation extends Stage {
         this.setScene(sceneReservationAjout);
 
         //Comportement boutton
-//        btnValider.setOnAction(event -> {
-//            Client c = (Client)champClient.getValue();
-//            Chambre ch = (Chambre)champChambre.getValue();
+        btnValider.setOnAction(event -> {
+            Client c = champClient.getValue();
+            Chambre ch =champChambre.getValue();
+            Planning planningAdd = new Planning(ch.getId(),dateReserv.getValue(),payeChoice.getValue(),reserveChoice.getValue(),c.getNom(),c.getPrenom());
 //            dateReserv.getValue();
 //            payeChoice.getValue();
 //            reserveChoice.getValue();
-//            PlanningDAO.addReservation(c, ch);
-//
-//        });
+            try {
+                PlanningDAO.addReservation(planningAdd,c,ch);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        });
     }
 }

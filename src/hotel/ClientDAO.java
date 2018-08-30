@@ -1,6 +1,5 @@
 package hotel;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class ClientDAO {
                    int idPaysL = resultset.getInt("pays_id");
 
 
-                   Client clientL= new Client(idl,civilitel,nomL,prenomL,adresseL,cpL,villeL,idPaysL);
+                   Client clientL= new Client(civilitel,nomL,prenomL,adresseL,cpL,villeL);
 
                 clients.add(clientL);
             }
@@ -44,7 +43,7 @@ public class ClientDAO {
         return clients;
     }
     public static void addClient(Client client) throws SQLException, ClassNotFoundException {
-        String AddQueryClient = "insert into clients (civilite, nom, prenom, adresse, codePostal, ville, pays_id) values ('"+client.getCivilite()+"','"+client.getNom()+"','"+client.getPrenom()+"','"+client.getAdresse()+"','"+client.getCodePostal()+"','"+client.getVille()+"', "+client.getId_pays()+")";
+        String AddQueryClient = "insert into clients (civilite, nom, prenom, adresse, codePostal, ville) values ('"+client.getCivilite()+"','"+client.getNom()+"','"+client.getPrenom()+"','"+client.getAdresse()+"','"+client.getCodePostal()+"','"+client.getVille()+"')";
         MySQLDatabaseUtil.dbExecuteUpdate(AddQueryClient);
     }
     public static void removeClient(Client clientD) throws SQLException, ClassNotFoundException {
@@ -70,7 +69,7 @@ public class ClientDAO {
                String cpL = searchResult.getString("codePostal");
                String villeL = searchResult.getString("ville");
                int idPaysL = searchResult.getInt("pays_id");
-               Client clientL= new Client(idl,civilitel,nomL,prenomL,adresseL,cpL,villeL,idPaysL);
+               Client clientL= new Client(civilitel,nomL,prenomL,adresseL,cpL,villeL);
               clientsSearch.add(clientL);
            }
 
